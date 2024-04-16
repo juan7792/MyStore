@@ -1,0 +1,9 @@
+<navbar></navbar>
+<h2>Transaction history</h2>
+<ul class="list-group">
+    <li 
+        *ngFor="let transaction of transactions"
+        class="list-group-item">
+        Description: {{ transaction[0] }} // Timestamp: {{ transaction[1] }}
+    </li>
+</ul>

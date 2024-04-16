@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav">
+      <li>
+        <a 
+        class="nav-link"
+        routerLink="/home">Home</a>
+      </li>
+      <li>
+        <a 
+        class="nav-link"
+        routerLink="/allproducts">All products</a>
+      </li>
+      <li>
+        <a 
+        class="nav-link"
+        routerLink="/myproducts">My products</a>
+      </li>
+      <li>
+        <a 
+        class="nav-link"
+        routerLink="/transactions">Transactions</a>
+      </li>
+      <li>
+        <a 
+        (click)="authService.logout()"
+        routerLink="/login"
+        class="nav-link">Log out</a>
+      </li>
+    </ul>
+  </div>
+</nav>

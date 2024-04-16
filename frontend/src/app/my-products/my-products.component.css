@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.css";
+
+body { padding: 20px; }
+
+label {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.btn-primary {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.submit {
+    margin-left: 30px;
+    margin-right: 30px;
+}
