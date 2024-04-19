@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BadInput } from '../common/bad-input';
+import { NotFoundError } from '../common/not-found-error';
 
 @Component({
   selector: 'login',
@@ -18,7 +20,6 @@ export class LoginComponent {
   }
 
   signIn(credentials: any) {
-    console.log("I worked!");
     this.authService.login(credentials)
       .subscribe(result => {
         if (result) {
@@ -27,6 +28,9 @@ export class LoginComponent {
         }
         else  
           this.invalidLogin = true; 
+      },
+      error => {
+        throw error;
       });
   }
 }

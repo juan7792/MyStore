@@ -13,18 +13,4 @@ export class CreateAccountComponent {
   constructor(private service: DataService) {
   }
   
-  createAccount(email: HTMLInputElement
-    , password: HTMLInputElement) {
-
-    let account: any = { username: email.value
-      , password: password.value
-    };
-    email.value = '';
-    password.value = '';
-    
-    this.service.createData(account, this.path)
-    .subscribe(response => {
-        console.log(response);
-      });
-  }
 }

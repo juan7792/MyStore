@@ -21,11 +21,9 @@
         <property name="show_sql">true</property>
 
         <mapping class="com.juan.backend.entities.Account"/>
-        <mapping class="com.juan.backend.entities.ObsoleteCurrency"/>
         <mapping class="com.juan.backend.entities.Product"/>
         <mapping class="com.juan.backend.entities.Transaction"/>
         <mapping class="com.juan.backend.entities.User"/>
-        <mapping class="com.juan.backend.entities.Test"/>
     </session-factory>
 
 

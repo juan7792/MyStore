@@ -4,11 +4,14 @@ import { Observable, of } from 'rxjs';
 
 @Injectable()
 
-export class fakeBackendFactory implements HttpInterceptor {
+export class interceptorFactory implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
         const { url, method, headers, body } = request;
-        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgMSIsImlhdCI6MTUxNjIzOTAyMiwiYWRtaW4iOnRydWV9.Lokoj2-PLZoqkMH1JA6WkqV0P7QqtD6oVQTy_Gp_tcU';
+        let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciAxIiwiaWQiOjN9.N7ni3xs-tck0JzzcVwW4BEgHSkmQgaxHlHN7NB4R67c';
+        let token1 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciAxIiwiaWQiOjF9.ixz0QjsD2CmtyOfh4pEu4q5zbWI3rWgF2b783elSc-8';
+        let token2 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciAyIiwiaWQiOjJ9.JTVghRz1IZ_B_l5Ji8p5rYCVeGhLn2nM2mhik5pxIs0';
+        let token3 = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciAzIiwiaWQiOjN9.YTeXf238jJtRvKHfPX6tqJv3Cet2BlX8a2o2WgYDZi8';
 
         if (url.endsWith('/api/authenticate') && method === 'POST'){
             return authenticate();

@@ -24,24 +24,26 @@ public class ProductController {
         return ProductService.getAllProducts();
     }
 
-    @GetMapping("/myproducts")
-    public List<Product> getMyProducts() {
-        return ProductService.getMyProducts();
+    @GetMapping("/myproducts/{id}")
+    public List<Product> getMyProducts(@PathVariable("id") Long id) {
+        return ProductService.getMyProducts(id);
     }
 
-    @PostMapping(value = { "/allproducts", "/myproducts" })
+    @PostMapping(value = { "/allproducts/{id}", "/myproducts/{id}" })
     @ResponseStatus(HttpStatus.CREATED)
-    public Product addProduct(@RequestBody Product product) {
-        return ProductService.createProduct(product);
+    public Product addProduct(@RequestBody Product product
+            , @PathVariable("id") Long id) {
+        return ProductService.createProduct(product, id);
     }
 
     @PutMapping("/allproducts/{id}")
-    public Product updateProduct(@RequestBody Product product, @PathVariable("id") int id) {
+    public Product updateProduct(@RequestBody Product product
+            , @PathVariable("id") Long id) {
         return ProductService.sellProduct(product, id);
     }
 
     @DeleteMapping("/myproducts/{id}")
-    public Product deleteProduct(@PathVariable("id") int id){
+    public Product deleteProduct(@PathVariable("id") Long id){
         return ProductService.deleteMyProduct(id);
     }
 }

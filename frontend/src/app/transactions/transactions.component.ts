@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'transactions',
@@ -14,10 +15,14 @@ export class TransactionsComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.service.getData(this.path)
+    let accountId: any = this.service.getInputId();
+
+    this.service.getMyData(this.path, accountId)
       .subscribe(response => {
         this.transactions = response;
-        console.log(response);
+      },
+      error => {
+        throw error;
       });
   }
 }

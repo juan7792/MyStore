@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,8 +16,9 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
 import { FormsModule } from '@angular/forms';
-import { fakeBackendFactory } from './helpers/fake-backend';
+import { interceptorFactory } from './helpers/interceptor';
 import { AuthGuard } from './services/authguard.service';
+import { AppErrorHandler } from './common/app-error-handler';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { AuthGuard } from './services/authguard.service';
     MyProductsComponent,
     HomeComponent,
     NavbarComponent,
-    TransactionsComponent
+    TransactionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,10 +80,11 @@ import { AuthGuard } from './services/authguard.service';
   ],
   providers: [
     provideClientHydration(),
-    { provide: HTTP_INTERCEPTORS, useClass: fakeBackendFactory, multi: true },
     DataService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: interceptorFactory, multi: true },
+    { provide: ErrorHandler, useClass: AppErrorHandler }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { BadInput } from '../common/bad-input';
 
 @Component({
   selector: 'all-products',
@@ -16,9 +16,12 @@ export class AllProductsComponent implements OnInit {
   
   ngOnInit(): void {
     this.service.getData(this.path)
-      .subscribe(response => {
+      .subscribe(
+      response => {
         this.products = response;
-        console.log(response);
+      },
+      error => {
+        throw error;
       });
   }
 
@@ -26,30 +29,37 @@ export class AllProductsComponent implements OnInit {
     , desc: HTMLInputElement
     , price: HTMLInputElement
     , currency: HTMLSelectElement) {
+      
+      let newProduct: any = { name: name.value
+        , description: desc.value
+        , price: price.value
+        , currency: currency.value
+      };
+      name.value = '';
+      desc.value = '';
+      price.value = '';
+      
+    let accountId: any = this.service.getInputId();
 
-    let product: any = { name: name.value
-      , description: desc.value
-      , price: price.value
-      , currency: currency.value
-    };
-    name.value = '';
-    desc.value = '';
-    price.value = '';
-    
-    this.service.createData(product, this.path)
+    this.service.createData(newProduct, this.path, accountId)
     .subscribe(response => {
-        product['id'] = (response as any).id;
-        this.products.splice(0, 0, product);
-        console.log(response);
+        let updatedProduct = response;
+        this.products.splice(0, 0, updatedProduct);
+      },
+      (error: Response) => {
+        if (error instanceof BadInput) {
+          alert("Please enter valid data");
+        }
+        else throw error;
       });
   }
 
   sellProduct(product: any) {
-    console.log(product.productId);
-
     this.service.updateData(product, this.path)
       .subscribe(response => {
-        console.log(response);
+      },
+      error => {
+        throw error;
       });
   }
 }

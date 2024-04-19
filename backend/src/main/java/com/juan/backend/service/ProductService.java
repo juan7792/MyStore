@@ -1,6 +1,8 @@
 package com.juan.backend.service;
 
 import com.juan.backend.HibernateUtil;
+import com.juan.backend.common.BadInputException;
+import com.juan.backend.common.ProductNotFoundException;
 import com.juan.backend.entities.Account;
 import com.juan.backend.entities.Product;
 import com.juan.backend.entities.Transaction;
@@ -15,17 +17,21 @@ import java.util.List;
 @Service
 public class ProductService {
 
+    private static SessionFactory factory;
+
+    private static Session session;
+
+
     public static List<Product> getAllProducts() {
-        SessionFactory factory = null;
-        Session session = null;
         List<Product> products = null;
 
         try {
-            factory = HibernateUtil.getSessionFactory();
-            session = factory.openSession();
+            Session currentSession = getSession();
 
-            Query query = (Query) session.createQuery("select p from Product p");
+            Query query = (Query) currentSession.createQuery("select p from Product p");
             products = query.list();
+
+            setSession(currentSession);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,17 +40,17 @@ public class ProductService {
         }
     }
 
-    public static List<Product> getMyProducts() {
-        SessionFactory factory = null;
-        Session session = null;
+    public static List<Product> getMyProducts(Long id) {
         List<Product> products = null;
 
         try {
-            factory = HibernateUtil.getSessionFactory();
-            session = factory.openSession();
+            Session currentSession = getSession();
 
-            Query query = (Query) session.createQuery("select p from Product p where p.account.accountId = 3");
+            Query query = (Query) currentSession.createQuery("select p from Product p where p.account.accountId = :id");
+            query.setParameter("id", id);
             products = query.list();
+
+            setSession(currentSession);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,25 +59,28 @@ public class ProductService {
         }
     }
 
-    public static Product createProduct(Product product){
-        SessionFactory factory = null;
-        Session session = null;
+    public static Product createProduct(Product product, Long id){
         org.hibernate.Transaction tx = null;
         List<Account> account = null;
 
         try {
-            factory = HibernateUtil.getSessionFactory();
-            session = factory.openSession();
-            tx = session.beginTransaction();
+            Session currentSession = getSession();
+            tx = currentSession.beginTransaction();
 
-            Query query = (Query) session.createQuery("select a from Account a where a.accountId = 3");
+            // Throw error
+            if (product == null)
+                throw new BadInputException();
+
+            Query query = (Query) currentSession.createQuery("select a from Account a where a.accountId = :id");
+            query.setParameter("id", id);
             account = query.list();
 
             product.setAccount(account.get(0)); // Retrieve first Account object of the list
             product.setCreatedDate(new Date());
             product.setLastUpdatedDate(new Date());
 
-            session.save(product);
+            currentSession.save(product);
+            setSession(currentSession);
 
             tx.commit();
 
@@ -83,22 +92,24 @@ public class ProductService {
         }
     }
 
-    public static Product sellProduct(Product product, int id) {
-        SessionFactory factory = null;
-        Session session = null;
+    public static Product sellProduct(Product product, Long id) {
         org.hibernate.Transaction tx = null;
         Transaction transaction = new Transaction();
         List<Product> products = null;
 
         try {
-            factory = HibernateUtil.getSessionFactory();
-            session = factory.openSession();
-            tx = session.beginTransaction();
+            Session currentSession = getSession();
+            tx = currentSession.beginTransaction();
+
+            // Throw error
+            if (product == null)
+                throw new ProductNotFoundException();
 
             // Manage product
             if (!product.isSold()){
-                Query query = (Query) session.createQuery(
-                        "select p from Product p where p.productId = " + id);
+                Query query = (Query) currentSession.createQuery(
+                        "select p from Product p where p.productId = :id");
+                query.setParameter("id", id);
                 products = query.list();
                 products.get(0).setSold(true);
             }
@@ -107,7 +118,8 @@ public class ProductService {
             transaction.setProduct(product);
             transaction.setCreatedDate(new Date());
 
-            session.save(transaction);
+            currentSession.save(transaction);
+            setSession(currentSession);
 
             tx.commit();
 
@@ -119,23 +131,25 @@ public class ProductService {
         }
     }
 
-    public static Product deleteMyProduct(int id) {
-        SessionFactory factory = null;
-        Session session = null;
+    public static Product deleteMyProduct(Long id) {
         org.hibernate.Transaction tx = null;
         List<Product> products = null;
 
-
         try {
-            factory = HibernateUtil.getSessionFactory();
-            session = factory.openSession();
-            tx = session.beginTransaction();
+            Session currentSession = getSession();
+            tx = currentSession.beginTransaction();
 
             // Manage product
-            Query query = (Query) session.createQuery("select p from Product p where p.productId = " + id);
+            Query query = (Query) currentSession.createQuery("select p from Product p where p.productId = :id");
+            query.setParameter("id", id);
             products = query.list();
 
-            session.delete(products.get(0));
+            // Throw error
+            if (products == null)
+                throw new ProductNotFoundException();
+
+            currentSession.delete(products.get(0));
+            setSession(currentSession);
 
             tx.commit();
 
@@ -145,5 +159,24 @@ public class ProductService {
         } finally {
             return null;
         }
+    }
+
+    public static Session getSession() {
+        if (session != null && session.isConnected())
+            session.close();
+        // Reset session
+        factory = null;
+        session = null;
+
+        // Set session
+        factory = HibernateUtil.getSessionFactory();
+        session = HibernateUtil.getSessionFactory().openSession();
+        return session;
+    }
+
+    public static void setSession(Session session) {
+        if (ProductService.session == session)
+            return;
+        ProductService.session = session;
     }
 }

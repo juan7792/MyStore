@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
+import { NotFoundError } from '../common/not-found-error';
+import { BadInput } from '../common/bad-input';
 
 @Component({
   selector: 'my-products',
@@ -14,10 +16,14 @@ export class MyProductsComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.service.getData(this.path)
+    let accountId: any = this.service.getInputId();
+
+    this.service.getMyData(this.path, accountId)
       .subscribe(response => {
         this.products = response;
-        console.log(response);
+      },
+      error => {
+        throw error;
       });
   }
 
@@ -25,21 +31,28 @@ export class MyProductsComponent implements OnInit {
     , desc: HTMLInputElement
     , price: HTMLInputElement
     , currency: HTMLSelectElement) {
+  
+      let newProduct: any = { name: name.value
+        , description: desc.value
+        , price: price.value
+        , currency: currency.value
+      };
+      name.value = '';
+      desc.value = '';
+      price.value = '';
+      
+    let accountId: any = this.service.getInputId();
 
-    let product: any = { name: name.value
-      , description: desc.value
-      , price: price.value
-      , currency: currency.value
-    };
-    name.value = '';
-    desc.value = '';
-    price.value = '';
-    
-    this.service.createData(product, this.path)
+    this.service.createData(newProduct, this.path, accountId)
     .subscribe(response => {
-        product['id'] = (response as any).id;
-        this.products.splice(0, 0, product);
-        console.log(response);
+        let updatedProduct =  response;
+        this.products.splice(0, 0, updatedProduct);
+      },
+      (error: Response) => {
+        if (error instanceof BadInput) {
+          alert("Please enter valid data.");
+        }
+        else throw error;
       });
   }
 
@@ -48,8 +61,12 @@ export class MyProductsComponent implements OnInit {
     this.service.deleteData(product, this.path)
       .subscribe(response => {
         this.products.splice(index, 1);
-        console.log(response);
-        console.log(index);
+      },
+      (error: Response) => {
+        if (error instanceof NotFoundError) {
+          alert('This product has already been deleted.');
+        }
+        else throw error;
       })
   }
 }

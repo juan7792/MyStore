@@ -10,21 +10,22 @@ import java.util.List;
 
 @Service
 public class TransactionService {
-    public static Object getMyTransactions() {
-        SessionFactory factory = null;
-        Session session = null;
+    private static SessionFactory factory;
+    private static Session session;
+
+    public static Object getMyTransactions(Long id) {
         List<Object> response = null;
 
         try {
-            factory = HibernateUtil.getSessionFactory();
-            session = factory.openSession();
+            Session session = getSession();
 
             Query query = (Query) session.createQuery(
                     "select p.description, t.createdDate " +
                             "from Transaction t " +
                             "inner join Product p " +
                             "on t.product.productId = p.productId " +
-                            "where p.account.accountId = 3");
+                            "where p.account.accountId = :id");
+            query.setParameter("id", id);
             response = query.list();
 
         } catch (Exception e) {
@@ -32,5 +33,16 @@ public class TransactionService {
         } finally {
             return response;
         }
+    }
+
+    public static Session getSession() {
+        // Reset session
+        factory = null;
+        session = null;
+
+        // Set session
+        factory = HibernateUtil.getSessionFactory();
+        session = HibernateUtil.getSessionFactory().openSession();
+        return session;
     }
 }
