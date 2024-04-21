@@ -1,0 +1,33 @@
+<div class="items-my-products bg-light">
+    <h2>Available products</h2>
+    <table class="table-products">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <ng-container
+            *ngFor="let product of allProducts.products"
+            class="list-group-item">
+            <tbody>
+                <tr>
+                    <td 
+                        class="cell-purchase"
+                        style="text-align: center; vertical-align: middle;">
+                        <button
+                            (click)="allProducts.sellProduct(product)"
+                            class="btn btn-primary btn-purchase">
+                            Purchase
+                        </button>
+                    </td>
+                    <td width="25%">{{ product.name }}</td>
+                    <td width="45%">{{ product.description }}</td>
+                    <td>{{ product.price }} {{ product.currency }}</td>
+                </tr>
+            </tbody>
+        </ng-container>
+    </table>
+</div>

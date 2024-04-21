@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.css";
+
+body { padding: 20px; }
+
+label {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+ol {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.btn-primary {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-submit {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.form-create-product {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+}

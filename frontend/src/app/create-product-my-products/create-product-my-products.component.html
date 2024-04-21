@@ -1,0 +1,59 @@
+<form class="form-create-product bg-light" #f="ngForm" (ngSubmit)="myProducts.createProduct(name, description, price, currency)">
+    <h2>Create a product using the fields below</h2>
+    <div class="inputFields">
+        <label for="productName">Name:</label>
+        <input 
+            #name
+
+            ngModel
+            #productName="ngModel"
+            required
+            pattern="^[a-zA-Z0-9\s]*$"
+            name="productName" 
+            id="productName" 
+            type="text">
+        <label for="productDescription">Description:</label>
+        <input 
+            #description
+
+            ngModel
+            #productDescription="ngModel"
+            required
+            pattern="^[a-zA-Z0-9\s]*$"
+            name="productDescription"
+            id="productDescription" 
+            type="text">
+        <label for="productPrice">Price:</label>
+        <input 
+            #price
+
+            ngModel
+            #productPrice="ngModel"
+            required
+            pattern="^(0|[1-9]\d*)(\.\d+)?$"
+            name="productPrice" 
+            id="productPrice" 
+            type="text">
+        <label for="Currency">Currency</label>
+        <select #currency name="currency" id="Currency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="VEF">VEF</option>
+        </select>
+        <button 
+            class="btn btn-primary btn-submit"
+            [disabled]="!f.valid">
+            Submit
+        </button>
+        <div *ngIf="!f.valid" class="alert alert-primary" role="alert">
+            <ul>
+                <li *ngIf="productName.value == '' || productDescription.value == '' || productPrice.value == ''">
+                    Each field must contain a value.
+                </li>
+                <li *ngIf="!productName.valid">Enter only letters and numbers in the field "Name"</li>
+                <li *ngIf="!productDescription.valid">Enter only letters and numbers in the field "Description"</li>
+                <li *ngIf="!productPrice.valid">Enter only numbers or  numbers separated by a period in the field "Price".</li>
+            </ul>
+        </div>
+    </div>
+</form>

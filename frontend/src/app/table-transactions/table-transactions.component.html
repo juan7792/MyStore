@@ -1,0 +1,23 @@
+<div class="items-my-products bg-light">
+    <h2>My products selling history</h2>
+    <table class="table-transactions">
+        <thead>
+            <tr>
+                <th>Product name</th>
+                <th>Selling price</th>
+                <th>Selling timestamp</th>
+            </tr>
+        </thead>
+        <ng-container
+            *ngFor="let transaction of transactions.transactions"
+            class="list-group-item">
+            <tbody>
+                <tr>
+                    <td width="25%">{{ transaction[0] }}</td>
+                    <td>{{ transaction[1] }} {{ transaction[2] }}</td>
+                    <td width="45%">{{ transaction[3] }}</td>
+                </tr>
+            </tbody>
+        </ng-container>
+    </table>
+</div>

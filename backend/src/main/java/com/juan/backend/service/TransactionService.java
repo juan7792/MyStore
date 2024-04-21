@@ -20,7 +20,7 @@ public class TransactionService {
             Session session = getSession();
 
             Query query = (Query) session.createQuery(
-                    "select p.description, t.createdDate " +
+                    "select p.name, p.price, p.currency, t.createdDate " +
                             "from Transaction t " +
                             "inner join Product p " +
                             "on t.product.productId = p.productId " +

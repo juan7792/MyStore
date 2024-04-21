@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BadInput } from '../common/bad-input';
-import { NotFoundError } from '../common/not-found-error';
 
 @Component({
   selector: 'login',

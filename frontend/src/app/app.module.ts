@@ -7,7 +7,6 @@ import { AllProductsComponent } from './all-products/all-products.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LoginComponent } from './login/login.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
 import { MyProductsComponent } from './my-products/my-products.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -19,6 +18,11 @@ import { FormsModule } from '@angular/forms';
 import { interceptorFactory } from './helpers/interceptor';
 import { AuthGuard } from './services/authguard.service';
 import { AppErrorHandler } from './common/app-error-handler';
+import { CreateProductMyProductsComponent } from './create-product-my-products/create-product-my-products.component';
+import { CreateProductAllProductsComponent } from './create-product-all-products/create-product-all-products.component';
+import { TableMyProductsComponent } from './table-my-products/table-my-products.component';
+import { TableAllProductsComponent } from './table-all-products/table-all-products.component';
+import { TableTransactionsComponent } from './table-transactions/table-transactions.component';
 
 @NgModule({
   declarations: [
@@ -26,11 +30,15 @@ import { AppErrorHandler } from './common/app-error-handler';
     AllProductsComponent,
     NotFoundComponent,
     LoginComponent,
-    CreateAccountComponent,
     MyProductsComponent,
     HomeComponent,
     NavbarComponent,
     TransactionsComponent,
+    CreateProductMyProductsComponent,
+    CreateProductAllProductsComponent,
+    TableMyProductsComponent,
+    TableAllProductsComponent,
+    TableTransactionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,10 +59,6 @@ import { AppErrorHandler } from './common/app-error-handler';
       {
         path: 'login',
         component: LoginComponent
-      },
-      {
-        path: 'account',
-        component: CreateAccountComponent
       },
       {
         path: 'allproducts',

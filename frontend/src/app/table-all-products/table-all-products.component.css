@@ -30,7 +30,7 @@ tbody {
     margin-bottom: 10px;
 }
 
-.btn-delete {
+.btn-purchase {
     margin-right: 20px;
     margin-left: 20px;
 }
@@ -40,7 +40,7 @@ tbody {
     width: 100%;
 }
 
-.cell-delete {
+.cell-purchase {
     width: 20px;
 }
 

@@ -1,4 +1,14 @@
 
 .active {
     background-color: #ccc;
+    color: 000000;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: 000000;
+}
+
+.navbar {
+    border-radius: 15px;
 }
