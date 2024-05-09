@@ -175,14 +175,14 @@ public class ProductService {
         Query query = (Query) session.createQuery("select p from Product p");
         List<Product> products = query.list();
 
-        return products.toArray().length > 20;
+        return products.toArray().length > 5;
     }
 
     public static boolean isNumberOfTransactionsExceeded(Session session) {
         Query query = (Query) session.createQuery("select t from Transaction t");
         List<Transaction> transactions = query.list();
 
-        return transactions.toArray().length > 50;
+        return transactions.toArray().length > 10;
     }
 
     public static Session getSession() {

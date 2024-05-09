@@ -40,20 +40,26 @@ export class MyProductsComponent implements OnInit {
       name.value = '';
       desc.value = '';
       price.value = '';
-      
-    let accountId: any = this.service.getInputId();
 
-    this.service.createData(newProduct, this.path, accountId)
-    .subscribe(response => {
-        let updatedProduct =  response;
-        this.products.splice(0, 0, updatedProduct);
-      },
-      (error: Response) => {
-        if (error instanceof BadInput) {
-          alert("Please enter valid data.");
-        }
-        else throw error;
-      });
+      if  (this.products.length > 20){
+        alert("The maximum number of all products in this app is 20. " +
+          "Please delete products in \"My Products\" if you want to create more items.");
+        return;
+      }
+      
+      let accountId: any = this.service.getInputId();
+
+      this.service.createData(newProduct, this.path, accountId)
+      .subscribe(response => {
+          let updatedProduct =  response;
+          this.products.splice(0, 0, updatedProduct);
+        },
+        (error: Response) => {
+          if (error instanceof BadInput) {
+            alert("Please enter valid data.");
+          }
+          else throw error;
+        });
   }
 
   deleteProduct(product: any) {
