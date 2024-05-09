@@ -30,9 +30,4 @@ public class HibernateUtil {
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
     }
-
-    public static void declareSession() {
-        SessionFactory factory = null;
-        Session session = null;
-    }
 }
