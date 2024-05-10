@@ -1,9 +1,18 @@
-target/
+### Backend ###
+*/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+*/src/main/**/persistence.xlm
+*/src/main/**/hibernate.cfg.xlm
+*/src/main/**/hibernate.properties
+
+### Frontend ###
+*/.angular/
+*/node_modules/
 
 ### IntelliJ IDEA ###
+*/.idea/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
@@ -32,7 +41,7 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+*/.vscode/
 
 ### Mac OS ###
 .DS_Store

@@ -1,3 +1,1 @@
-"# MyStore" 
-"# MyStore" 
-"# MyStore" 
+"MyStore project: use case developed with Spring, Hibernate and Angular" 
