@@ -1,18 +1,18 @@
 ### Backend ###
-**/target
+target
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-*/src/main/**/persistence.xlm
-*/src/main/**/hibernate.cfg.xlm
-*/src/main/**/hibernate.properties
+persistence.xlm
+hibernate.cfg.xlm
+hibernate.properties
 
 ### Frontend ###
-*/.angular/
-*/node_modules/
+.angular
+node_modules
 
 ### IntelliJ IDEA ###
-*/.idea/
+.idea
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
