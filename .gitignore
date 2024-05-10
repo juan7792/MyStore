@@ -1,5 +1,6 @@
 ### Backend ###
 target
+target/*
 persistence.xlm
 hibernate.cfg.xlm
 hibernate.properties
