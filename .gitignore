@@ -1,9 +1,9 @@
 ### Backend ###
 target
 target/*
-persistence.xlm
-hibernate.cfg.xlm
-hibernate.properties
+*/persistence.xml
+*/hibernate.cfg.xml
+*/hibernate.properties
 
 ### Frontend ###
 .angular
