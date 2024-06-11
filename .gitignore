@@ -4,6 +4,8 @@ target/*
 */persistence.xml
 */hibernate.cfg.xml
 */hibernate.properties
+*/Dockerfile*
+*/database_conf.sql
 
 ### Frontend ###
 .angular
