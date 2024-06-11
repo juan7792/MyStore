@@ -186,7 +186,6 @@ public class ProductService {
     }
 
     public static Session getSession() {
-
         if (session != null && session.isConnected())
             session.close();
         // Reset session
