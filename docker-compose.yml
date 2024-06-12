@@ -1,0 +1,26 @@
+services:
+  angular:
+    build:
+      context: ./frontend
+      dockerfile: frontend.Dockerfile
+    ports:
+      - "4200:4200"
+  java:
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+  mysql:
+    container_name: mysql
+    build:
+      context: ./backend
+      dockerfile: database.Dockerfile
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=storeadmin
+      - MYSQL_PASSWORD=5ELXMsPvTpsvjtvl27qd
+    ports:
+      - "3306:3306"

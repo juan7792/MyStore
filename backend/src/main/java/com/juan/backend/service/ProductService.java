@@ -30,7 +30,7 @@ public class ProductService {
         try {
             Session currentSession = getSession();
 
-            Query query = (Query) currentSession.createQuery("select p from Product p");
+            Query query = (Query) currentSession.createQuery("SELECT p FROM Product p");
             products = query.list();
 
             setSession(currentSession);
@@ -48,7 +48,7 @@ public class ProductService {
         try {
             Session currentSession = getSession();
 
-            Query query = (Query) currentSession.createQuery("select p from Product p where p.account.accountId = :id");
+            Query query = (Query) currentSession.createQuery("SELECT p FROM Product p WHERE p.account.accountId = :id");
             query.setParameter("id", id);
             products = query.list();
 
@@ -77,7 +77,7 @@ public class ProductService {
             if (isNumberOfProductsExceeded(currentSession))
                 throw new MaxProductsException();
 
-            Query query = (Query) currentSession.createQuery("select a from Account a where a.accountId = :id");
+            Query query = (Query) currentSession.createQuery("SELECT a FROM Account a WHERE a.accountId = :id");
             query.setParameter("id", id);
             account = query.list();
 
@@ -118,10 +118,11 @@ public class ProductService {
             // Manage product
             if (!product.isSold()){
                 Query query = (Query) currentSession.createQuery(
-                        "select p from Product p where p.productId = :id");
+                        "SELECT p FROM Product p WHERE p.productId = :id");
                 query.setParameter("id", id);
                 products = query.list();
                 products.get(0).setSold(true);
+                product = products.get(0);
             }
 
             // Create transaction
@@ -150,7 +151,7 @@ public class ProductService {
             tx = currentSession.beginTransaction();
 
             // Manage product
-            Query query = (Query) currentSession.createQuery("select p from Product p where p.productId = :id");
+            Query query = (Query) currentSession.createQuery("SELECT p FROM Product p WHERE p.productId = :id");
             query.setParameter("id", id);
             products = query.list();
 
@@ -172,14 +173,14 @@ public class ProductService {
     }
 
     public static boolean isNumberOfProductsExceeded(Session session) {
-        Query query = (Query) session.createQuery("select p from Product p");
+        Query query = (Query) session.createQuery("SELECT p FROM Product p");
         List<Product> products = query.list();
 
         return products.toArray().length > 20;
     }
 
     public static boolean isNumberOfTransactionsExceeded(Session session) {
-        Query query = (Query) session.createQuery("select t from Transaction t");
+        Query query = (Query) session.createQuery("SELECT t FROM Transaction t");
         List<Transaction> transactions = query.list();
 
         return transactions.toArray().length > 50;

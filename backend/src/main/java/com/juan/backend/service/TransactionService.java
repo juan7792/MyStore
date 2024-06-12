@@ -21,11 +21,11 @@ public class TransactionService {
             Session currentSession = getSession();
 
             Query query = (Query) currentSession.createQuery(
-                    "select p.name, p.price, p.currency, t.createdDate " +
-                            "from Transaction t " +
-                            "inner join Product p " +
-                            "on t.product.productId = p.productId " +
-                            "where p.account.accountId = :id");
+                    "SELECT p.name, p.price, p.currency, t.createdDate " +
+                            "FROM Transaction t " +
+                            "INNER JOIN Product p " +
+                            "ON t.product.productId = p.productId " +
+                            "WHERE p.account.accountId = :id");
             query.setParameter("id", id);
             response = query.list();
 
